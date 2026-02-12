@@ -1,0 +1,294 @@
+/* ================================
+   RESET & BASE
+================================ */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+body {
+  background: #000;
+  color: #fff;
+  overflow-x: hidden;
+}
+
+/* ================================
+   3D BACKGROUND
+================================ */
+canvas {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+}
+
+/* ================================
+   HERO
+================================ */
+.hero {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.title {
+  font-size: clamp(2.8rem, 6vw, 5.2rem);
+  letter-spacing: 4px;
+  background: linear-gradient(90deg, #00f0ff, #8a2be2);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow:
+    0 0 25px rgba(0,240,255,0.6),
+    0 0 45px rgba(138,43,226,0.5);
+}
+
+.subtitle {
+  margin-top: 16px;
+  font-size: 1rem;
+  opacity: 0.75;
+}
+
+/* ================================
+   CARD BASE – APPLE PANEL
+================================ */
+.card {
+  position: relative;
+  margin: 120px auto;
+  width: 90%;
+  max-width: 980px;
+  padding: 48px;
+  border-radius: 28px;
+  background:
+    linear-gradient(
+      180deg,
+      rgba(255,255,255,0.12),
+      rgba(255,255,255,0.03)
+    );
+  backdrop-filter: blur(24px);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.15),
+    0 40px 90px rgba(0,0,0,0.8);
+  transition: transform 0.4s ease;
+}
+
+.card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 28px;
+  background: radial-gradient(
+    1200px circle at top left,
+    rgba(0,255,255,0.12),
+    transparent 45%
+  );
+  pointer-events: none;
+}
+
+.card:hover {
+  transform: translateY(-8px) scale(1.02);
+}
+
+/* ================================
+   CARD TYPOGRAPHY
+================================ */
+.card h2 {
+  font-size: 2rem;
+  margin-bottom: 22px;
+  background: linear-gradient(90deg, #ffffff, #bfffff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.card p {
+  font-size: 0.95rem;
+  line-height: 1.85;
+  color: rgba(255,255,255,0.85);
+  margin-bottom: 18px;
+}
+
+/* ================================
+   SKILLS – EQUAL SIZE SPEC TILES
+================================ */
+.skills-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 26px;
+  margin-top: 40px;
+}
+
+/* EACH SKILL CARD */
+.skills-grid span {
+  height: 160px;                /* 🔥 Equal height */
+  padding: 22px;
+  border-radius: 24px;
+  background:
+    linear-gradient(
+      145deg,
+      rgba(0,255,255,0.18),
+      rgba(0,255,255,0.04)
+    );
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-size: 0.95rem;
+  line-height: 1.4;
+  letter-spacing: 0.3px;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.25),
+    0 20px 45px rgba(0,255,255,0.35);
+  transition: all 0.35s ease;
+  position: relative;
+}
+
+/* Subtle Apple inner glow */
+.skills-grid span::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 24px;
+  background: linear-gradient(
+    180deg,
+    rgba(255,255,255,0.15),
+    transparent
+  );
+  opacity: 0.25;
+  pointer-events: none;
+}
+
+/* Hover – Apple calm */
+.skills-grid span:hover {
+  transform: translateY(-10px) scale(1.04);
+  box-shadow:
+    0 0 0 1px rgba(0,255,255,0.5),
+    0 30px 70px rgba(0,255,255,0.65);
+}
+
+/* ================================
+   LANGUAGES – SPEC LIST
+================================ */
+.card ul {
+  list-style: none;
+  margin-top: 20px;
+}
+
+.card ul li {
+  padding: 16px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+  font-size: 0.95rem;
+  color: rgba(255,255,255,0.9);
+}
+
+.card ul li:last-child {
+  border-bottom: none;
+}
+
+/* ================================
+   CONTACT – SYSTEM INFO ROWS
+================================ */
+/* ================================
+   CONTACT – APPLE SYSTEM STYLE
+================================ */
+
+.card.contact {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+/* Intro text box */
+.contact-box {
+  padding: 18px 22px;
+  border-radius: 18px;
+  background: rgba(0,0,0,0.35);
+  font-size: 0.95rem;
+  color: rgba(255,255,255,0.85);
+  line-height: 1.7;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.1);
+}
+
+/* Clickable rows */
+.contact-row {
+  display: grid;
+  grid-template-columns: 40px 90px 1fr;
+  align-items: center;
+  padding: 20px 22px;
+  border-radius: 20px;
+  background: rgba(0,0,0,0.45);
+  text-decoration: none;
+  color: #fff;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.1),
+    0 20px 40px rgba(0,0,0,0.6);
+  transition: all 0.35s ease;
+}
+
+/* Remove all link styles */
+.contact-row:link,
+.contact-row:visited,
+.contact-row:hover,
+.contact-row:active {
+  color: #fff;
+  text-decoration: none;
+}
+
+/* Hover – Apple subtle glow */
+.contact-row:hover {
+  background: rgba(0,255,255,0.14);
+  transform: translateY(-4px);
+  box-shadow:
+    0 0 0 1px rgba(0,255,255,0.35),
+    0 30px 60px rgba(0,255,255,0.55);
+}
+
+/* Icon */
+.contact-row .icon {
+  font-size: 1.4rem;
+  opacity: 0.9;
+}
+
+/* Label (Email / WhatsApp) */
+.contact-row .label {
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  opacity: 0.6;
+}
+
+/* Value */
+.contact-row .value {
+  font-size: 0.95rem;
+  opacity: 0.95;
+  word-break: break-word;
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  .contact-row {
+    grid-template-columns: 36px 80px 1fr;
+    padding: 18px;
+  }
+}
+
+
+/* ================================
+   RESPONSIVE
+================================ */
+@media (max-width: 768px) {
+  .card {
+    padding: 30px;
+  }
+
+  .skills-grid {
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  }
+
+  .skills-grid span {
+    height: 140px;
+    font-size: 0.9rem;
+  }
+}
