@@ -21,6 +21,7 @@ canvas {
   position: fixed;
   inset: 0;
   z-index: -1;
+  transition: filter 0.4s ease;
 }
 
 /* ================================
@@ -41,68 +42,91 @@ canvas {
   background: linear-gradient(90deg, #00f0ff, #8a2be2);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  text-shadow:
-    0 0 25px rgba(0,240,255,0.6),
-    0 0 45px rgba(138,43,226,0.5);
 }
 
 .subtitle {
   margin-top: 16px;
-  font-size: 1rem;
   opacity: 0.75;
 }
 
 /* ================================
-   CARD BASE – APPLE PANEL
+   CARD BASE – APPLE GLASS
 ================================ */
 .card {
   position: relative;
   margin: 120px auto;
   width: 90%;
   max-width: 980px;
-  padding: 48px;
+  padding: 64px 48px 48px;
   border-radius: 28px;
-  background:
-    linear-gradient(
-      180deg,
-      rgba(255,255,255,0.12),
-      rgba(255,255,255,0.03)
-    );
+  background: linear-gradient(
+    180deg,
+    rgba(255,255,255,0.12),
+    rgba(255,255,255,0.03)
+  );
   backdrop-filter: blur(24px);
   box-shadow:
     inset 0 1px 0 rgba(255,255,255,0.15),
     0 40px 90px rgba(0,0,0,0.8);
-  transition: transform 0.4s ease;
+
+  opacity: 0;
+  transform: translateY(60px);
+  transition:
+    transform 0.6s ease,
+    opacity 0.8s ease;
 }
 
-.card::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border-radius: 28px;
-  background: radial-gradient(
-    1200px circle at top left,
-    rgba(0,255,255,0.12),
-    transparent 45%
-  );
-  pointer-events: none;
-}
-
-.card:hover {
-  transform: translateY(-8px) scale(1.02);
+.card.show {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 /* ================================
-   CARD TYPOGRAPHY
+   CARD IMAGE – LEFT CORNER
+================================ */
+.card-image {
+  position: absolute;
+  top: 42px;
+  left: 42px;
+  width: 90px;
+  opacity: 0.9;
+  pointer-events: none;
+  filter: drop-shadow(0 10px 30px rgba(0,255,255,0.35));
+}
+
+/* ================================
+   CARD TITLE
 ================================ */
 .card h2 {
+  text-align: center;
   font-size: 2rem;
-  margin-bottom: 22px;
+  margin-bottom: 36px;
   background: linear-gradient(90deg, #ffffff, #bfffff);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+  position: relative;
 }
 
+.card h2::after {
+  content: "";
+  position: absolute;
+  bottom: -15px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0%;
+  height: 3px;
+  border-radius: 3px;
+  background: linear-gradient(90deg, #00f0ff, #8a2be2);
+  transition: width 1s ease;
+}
+
+.card.show h2::after {
+  width: 100%;
+}
+
+/* ================================
+   CARD CONTENT
+================================ */
 .card p {
   font-size: 0.95rem;
   line-height: 1.85;
@@ -110,8 +134,12 @@ canvas {
   margin-bottom: 18px;
 }
 
+.card p:first-of-type {
+  margin-top: 6px;
+}
+
 /* ================================
-   SKILLS – EQUAL SIZE SPEC TILES
+   SKILLS GRID
 ================================ */
 .skills-grid {
   display: grid;
@@ -120,47 +148,28 @@ canvas {
   margin-top: 40px;
 }
 
-/* EACH SKILL CARD */
 .skills-grid span {
-  height: 160px;                /* 🔥 Equal height */
+  height: 160px;
   padding: 22px;
   border-radius: 24px;
-  background:
-    linear-gradient(
-      145deg,
-      rgba(0,255,255,0.18),
-      rgba(0,255,255,0.04)
-    );
+  background: linear-gradient(
+    145deg,
+    rgba(0,255,255,0.18),
+    rgba(0,255,255,0.04)
+  );
   display: flex;
   align-items: center;
   justify-content: center;
   text-align: center;
   font-size: 0.95rem;
-  line-height: 1.4;
-  letter-spacing: 0.3px;
   box-shadow:
     inset 0 1px 0 rgba(255,255,255,0.25),
     0 20px 45px rgba(0,255,255,0.35);
-  transition: all 0.35s ease;
-  position: relative;
+  transition:
+    transform 0.35s ease,
+    box-shadow 0.35s ease;
 }
 
-/* Subtle Apple inner glow */
-.skills-grid span::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border-radius: 24px;
-  background: linear-gradient(
-    180deg,
-    rgba(255,255,255,0.15),
-    transparent
-  );
-  opacity: 0.25;
-  pointer-events: none;
-}
-
-/* Hover – Apple calm */
 .skills-grid span:hover {
   transform: translateY(-10px) scale(1.04);
   box-shadow:
@@ -169,118 +178,110 @@ canvas {
 }
 
 /* ================================
-   LANGUAGES – SPEC LIST
+   CONTACT – NAVIGATION BOXES
 ================================ */
-.card ul {
-  list-style: none;
-  margin-top: 20px;
-}
-
-.card ul li {
-  padding: 16px 0;
-  border-bottom: 1px solid rgba(255,255,255,0.1);
-  font-size: 0.95rem;
-  color: rgba(255,255,255,0.9);
-}
-
-.card ul li:last-child {
-  border-bottom: none;
-}
-
-/* ================================
-   CONTACT – SYSTEM INFO ROWS
-================================ */
-/* ================================
-   CONTACT – APPLE SYSTEM STYLE
-================================ */
-
-.card.contact {
-  display: flex;
-  flex-direction: column;
-  gap: 18px;
-}
-
-/* Intro text box */
-.contact-box {
-  padding: 18px 22px;
-  border-radius: 18px;
-  background: rgba(0,0,0,0.35);
-  font-size: 0.95rem;
-  color: rgba(255,255,255,0.85);
-  line-height: 1.7;
-  box-shadow: inset 0 1px 0 rgba(255,255,255,0.1);
-}
-
-/* Clickable rows */
 .contact-row {
   display: grid;
   grid-template-columns: 40px 90px 1fr;
   align-items: center;
-  padding: 20px 22px;
-  border-radius: 20px;
-  background: rgba(0,0,0,0.45);
-  text-decoration: none;
-  color: #fff;
+  padding: 22px 26px;
+  border-radius: 22px;
+  margin-top: 18px;
+  cursor: pointer;
+  user-select: none;
+
+  background: linear-gradient(
+    180deg,
+    rgba(255,255,255,0.1),
+    rgba(255,255,255,0.03)
+  );
+
   box-shadow:
-    inset 0 1px 0 rgba(255,255,255,0.1),
+    inset 0 1px 0 rgba(255,255,255,0.15),
     0 20px 40px rgba(0,0,0,0.6);
-  transition: all 0.35s ease;
+
+  transition:
+    transform 0.35s ease,
+    box-shadow 0.35s ease;
 }
 
-/* Remove all link styles */
-.contact-row:link,
-.contact-row:visited,
-.contact-row:hover,
-.contact-row:active {
-  color: #fff;
-  text-decoration: none;
-}
-
-/* Hover – Apple subtle glow */
 .contact-row:hover {
-  background: rgba(0,255,255,0.14);
-  transform: translateY(-4px);
+  transform: translateY(-6px);
   box-shadow:
     0 0 0 1px rgba(0,255,255,0.35),
-    0 30px 60px rgba(0,255,255,0.55);
+    0 35px 70px rgba(0,255,255,0.65);
 }
 
-/* Icon */
+.contact-row:active {
+  transform: scale(0.98);
+}
+
 .contact-row .icon {
-  font-size: 1.4rem;
-  opacity: 0.9;
+  font-size: 1.6rem;
 }
 
-/* Label (Email / WhatsApp) */
 .contact-row .label {
-  font-size: 0.85rem;
-  text-transform: uppercase;
+  font-size: 0.8rem;
   letter-spacing: 1px;
+  text-transform: uppercase;
   opacity: 0.6;
 }
 
-/* Value */
 .contact-row .value {
   font-size: 0.95rem;
   opacity: 0.95;
   word-break: break-word;
 }
 
-/* Mobile */
-@media (max-width: 768px) {
-  .contact-row {
-    grid-template-columns: 36px 80px 1fr;
-    padding: 18px;
-  }
+/* ================================
+   LANGUAGES – CLEAN INFO CARDS
+================================ */
+.languages ul {
+  list-style: none;
+  padding: 0;
+  display: grid;
+  gap: 18px;
+  margin-top: 24px;
 }
 
+.languages ul li {
+  padding: 18px 22px;
+  border-radius: 18px;
+  background: linear-gradient(
+    180deg,
+    rgba(255,255,255,0.08),
+    rgba(255,255,255,0.02)
+  );
+  border-left: 3px solid rgba(0,255,255,0.6);
+  backdrop-filter: blur(14px);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.12),
+    0 16px 30px rgba(0,0,0,0.6);
+  transition:
+    transform 0.35s ease,
+    box-shadow 0.35s ease;
+}
+
+.languages ul li:hover {
+  transform: translateY(-4px);
+  box-shadow:
+    0 0 0 1px rgba(0,255,255,0.35),
+    0 30px 60px rgba(0,255,255,0.55);
+}
 
 /* ================================
-   RESPONSIVE
+   MOBILE
 ================================ */
 @media (max-width: 768px) {
   .card {
-    padding: 30px;
+    padding: 48px 30px 36px;
+  }
+
+  .card-image {
+    position: static;
+    display: block;
+    margin: 0 auto 14px;
+    width: 70px;
   }
 
   .skills-grid {
